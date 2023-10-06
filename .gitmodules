@@ -1,0 +1,3 @@
+[submodule "typeft"]
+	path = .
+	url = git@github.com:yumamur/typeft.git
