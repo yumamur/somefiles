@@ -1,33 +1,31 @@
+#include <pthread.h>
 #include <stdio.h>
-#include <unistd.h>
+#include <stdlib.h>
 
-typedef char	t_byte7[7];
+pthread_mutex_t	mutex;
 
-int	func(t_byte7 **a, int i)
+void	*routine(void *i)
 {
-	// static int	ctl;
-
-	if (!i)
-	// {
-	// 	++ctl;
-		*a = &(t_byte7){'a', 'a', 'a', 'a', 'a', 'a', 0};
-	// }
-	else
-		*a = &(t_byte7){'b', 'b', 'b', 'b', 'b', 'b', 0};
-	return (0);
+	for (int c = 0; c < 10000; ++c)
+	{
+		pthread_mutex_lock(&mutex);
+		++*(int *)i;
+		pthread_mutex_unlock(&mutex);
+	}
+	return (i);
 }
 
 int	main(void)
 {
-	t_byte7	*a;
-	t_byte7	*b;
+	pthread_t	t1;
+	pthread_t	t2;
+	int			c = 0;
 
-	// for (int i = 0; i < 100; ++i)
-	// 	printf("%d\n", i * i + i);
-	func(&a, 0);
-	// for (int i = 0; i < 100; ++i)
-	// 	printf("%d\n", i * i + i);
-	func(&b, 1);
-	printf("%s\n", *a);
-	printf("%s\n", *b);
+	pthread_mutex_init(&mutex, 0);
+	pthread_create(&t1, 0, routine, &c);
+	pthread_create(&t2, 0, routine, &c);
+	pthread_join(t1, 0);
+	pthread_join(t2, 0);
+	pthread_mutex_destroy(&mutex);
+	printf("%d\n",c);
 }
