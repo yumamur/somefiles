@@ -1,15 +1,12 @@
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
 
-int main()
+int	func(int *i)
 {
-	char *buf = getcwd(0, 0);
-	printf("%s\n", buf);
-	free(buf);
-	chdir("..");
-	buf = getcwd(0,0);
-	printf("%s\n", buf);
-	free(buf);
+	return (*i = 5);
+}
+
+int	main()
+{
+	int a = 0;
+	printf("%d\n%d\n", func(&a), a);
 }
