@@ -1,4 +1,0 @@
-
-CompileFlags:
-  Add: [-Wall, -Werror, -Wextra, -xc]
-  Compiler: clang
